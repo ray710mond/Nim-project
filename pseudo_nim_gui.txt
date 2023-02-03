@@ -1,0 +1,14 @@
+create tk gui with entry box
+    prompt for number of piles for nim game
+create 2nd entry box
+    prompt for number of circles in each piles
+        save as string
+        split into list
+        parse into ints
+display game on screen
+    each circle is button
+        press one circle in a pile
+        all circles above (inclusive) are removed
+    undo turn button
+    submit turn button
+    quit game button
