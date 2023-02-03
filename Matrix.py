@@ -60,6 +60,15 @@ class Matrix:
                     for j in range(self.cols):
                         result[i, j] = self[i, j] * other
             return result
+        if isinstance(self, Matrix) and isinstance(other, Vector):
+            if self.cols == other.size:
+                result = Vector(other.size)
+                for i in range(self.rows):
+                    for j in range(other.size):
+                            result[i] += self[i, j] * other[j]
+                return result
+            else:
+                return NotImplemented
     
     def __pow__(self, power):
         if power == 0:
@@ -85,7 +94,7 @@ class Matrix:
         for i in range(bits):
             for j in range(bits):
                 if i == j:
-                    M.data[i][j] = 2 ** (i-1)
+                    M.data[i][j] = 2 ** (i)
         return M
 
     def inverse(self):
@@ -128,11 +137,17 @@ class Matrix:
         return result
     
     def transpose(self):
-        result = Matrix(self.rows, self.cols)
-        for i in range(self.rows):
-            for j in range(self.cols):
-                result.data[i][j] = self.data[j][i]
-        return result
+        if isinstance(self, Matrix):
+            result = Matrix(self.rows, self.cols)
+            for i in range(self.rows):
+                for j in range(self.cols):
+                    result.data[i][j] = self.data[j][i]
+            return result
+        if isinstance(self, Vector):
+            result = Matrix(1, self.size)
+            for i in range(self.size):
+                result.data[0][i] = self.data[i]
+            return result
     
     def getMatrixMinor(self,i,j):
         return [row[j] + row[j+1] for row in (self.data[i]+self.data[i+1])]
@@ -200,6 +215,7 @@ class Vector(Matrix):
             self.data = data
         else:
             self.data = [[0 for i in range(1)] for j in range(size)]
+        self.size = size
 
     def __iter__(self):
         for row in range(self.rows):

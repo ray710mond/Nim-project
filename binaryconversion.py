@@ -6,4 +6,4 @@ def bin2dec(bin_vector):
     return dec
 
 bin_vector = Vector(8, [1, 0, 0, 1, 1, 1, 1, 0])
-bin2dec
+print(bin2dec(bin_vector))
